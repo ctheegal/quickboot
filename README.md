@@ -8,9 +8,13 @@
 
 # Project Name
 
-*\<update with your project name and a short description\>*
+*Qualcomm QuickBoot Optimizations*
 
-Project that does ... implemented in ... runs on Qualcomm® *\<processor\>*
+## Overview
+
+This repository contains a modular set of Yocto packages (`quickboot-audio`, `quickboot-camera`, and `quickboot-display`) designed to significantly reduce the boot time of multimedia subsystems on Qualcomm Linux Embedded platforms.
+
+By default, Linux distribution frameworks (like systemd, logind, and PipeWire/WirePlumber) prioritize desktop-like flexibility over raw boot speed. These packages aggressively strip out desktop overhead, leverage event-driven hardware triggers, and detach critical services from the standard systemd boot targets to achieve sub-second multimedia availability.
 
 ## Branches
 
