@@ -1,0 +1,4 @@
+# Trigger Weston immediately when the primary DRM card is detected by the kernel.
+# This eliminates delays waiting for generic multi-user targets.
+
+ACTION=="add", SUBSYSTEM=="drm", KERNEL=="card0", TAG+="systemd", ENV{SYSTEMD_READY}="1", ENV{SYSTEMD_WANTS}="weston.service"
