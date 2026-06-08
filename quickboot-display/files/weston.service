@@ -1,0 +1,59 @@
+# Manages the core weston daemon.
+# Triggered by udev rules (03-drm.rules) upon display card device detection.
+
+[Unit]
+# Remove default dependenies (sysinit.target, basic.target) to enable early start
+DefaultDependencies=no
+
+# Start as soon as display card appear
+Requires=dev-dri-card0.device
+After=dev-dri-card0.device
+
+# Since we are part of the graphical session, make sure we are started before
+# it is complete.
+Before=multi-user.target
+
+# Prevent starting on systems without virtual consoles, Weston requires one
+# for now.
+ConditionPathExists=/dev/tty0
+
+[Service]
+# Requires systemd-notify.so Weston plugin.
+Type=notify
+EnvironmentFile=/etc/default/weston
+
+# Don't wait for systemd-tmpfiles-session to create
+ExecStartPre=/bin/mkdir -p /tmp/.X11-unix
+ExecStartPre=/bin/chmod 1777 /tmp/.X11-unix
+ExecStart=/usr/bin/weston --modules=systemd-notify.so
+
+# The user to run Weston as.
+# For early boot optimizations, Weston is run as root. This ensures immediate
+# and unrestricted access to DRM/KMS nodes and input devices without waiting
+# for logind/PAM dbus calls which reduces latency.
+User=root
+Group=root
+
+# REQUIRED replacements for PAM
+Environment=XDG_RUNTIME_DIR=/run/weston
+RuntimeDirectory=weston
+RuntimeDirectoryMode=0700
+
+WorkingDirectory=/
+
+# A virtual terminal is needed.
+TTYPath=/dev/tty7
+TTYReset=yes
+TTYVHangup=yes
+TTYVTDisallocate=yes
+
+# Fail to start if not controlling the tty.
+StandardInput=tty-fail
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+# Note: If you only want weston to start on-demand, remove this line with a
+# service drop file
+WantedBy=multi-user.target
+
