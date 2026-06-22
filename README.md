@@ -1,10 +1,13 @@
-# Qualcomm QuickBoot Optimizations
+# Qualcomm Early Services Initialization Framework
 
 ## Overview
 
-This repository contains a modular set of Yocto packages (`quickboot-audio`, `quickboot-camera`, and `quickboot-display`) designed to significantly reduce the boot time of multimedia subsystems on Qualcomm Linux Embedded platforms.
+This project introduces a set of yocto recipes (systemd service units, udev rules, and kernel module configurations) designed to dramatically reduce the time-to-first-perception for critical system services — 
+•	Display (Weston / DRM pipeline)
+•	Audio (PipeWire)
+•	Camera (GStreamer / cam-server pipelines)
 
-By default, Linux distribution frameworks (like systemd, logind, and PipeWire/WirePlumber) prioritize desktop-like flexibility over raw boot speed. These packages aggressively strip out desktop overhead, leverage event-driven hardware triggers, and detach critical services from the standard systemd boot targets to achieve sub-second multimedia availability.
+It targets use cases such as **Action Cameras**, **Automotive IVI**, and **Industrial HMI** where a very fast boot experience is a hard product requirement.
 
 ## Branches
 
