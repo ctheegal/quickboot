@@ -105,10 +105,9 @@ After reboot, the early boot services will activate automatically as their respe
 
 ## Authors
 
-* __Chitti Babu Theegala__ — `ctheegal@qti.qualcomm.com`\
-* __Vaibhav Jindal__ — `vaibjind@qti.qualcomm.com`\
-* __Tarun Balaji Nidiganti__ — `tnidiganti@qti.qualcomm.com`\
-Qualcomm Technologies, Inc.
+* __Chitti Babu Theegala__ — `ctheegal@qti.qualcomm.com, Qualcomm Technologies, Inc.
+* __Vaibhav Jindal__ — `vaibjind@qti.qualcomm.com`, Qualcomm Technologies, Inc.
+* __Tarun Balaji Nidiganti__ — `tnidiganti@qti.qualcomm.com`, Qualcomm Technologies, Inc.
 
 ## License
 
