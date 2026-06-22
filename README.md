@@ -96,19 +96,14 @@ After reboot, the early boot services will activate automatically as their respe
 ### Deploy to Source code and enable the Quickboot module at compile time
 
 #### Fetch quickboot recipes 
-```bash
-cd qcom-meta
-git clone https://github.com/ctheegal/quickboot
-```bash
+* cd qcom-meta
+* git clone https://github.com/ctheegal/quickboot
 
 #### Add the recipe to `qcom-multimedia-image` (or any image) so it's baked in from first boot
-```bash
-meta-qcom-distro/recipes-products/images/qcom-multimedia-image.bb
-IMAGE_INSTALL:append = " quickboot_audio quickboot_camera quickboot_display"
-```bash
+* meta-qcom-distro/recipes-products/images/qcom-multimedia-image.bb
+* IMAGE_INSTALL:append = " quickboot_audio quickboot_camera quickboot_display"
 
-
-## Author
+## Authors
 
 * __Chitti Babu Theegala__ — `ctheegal@qti.qualcomm.com`\
 * __Vaibhav Jindal__ — `vaibjind@qti.qualcomm.com`\
