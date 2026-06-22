@@ -42,12 +42,9 @@ All early boot services are configured with `DefaultDependencies=no`, which remo
 
 **Mechanism:**
 - `display-modules.conf` pre-loads DRM/GPU kernel modules early.
-- A udev rule tags `card0` to create the `dev-dri-card0.device` systemd unit.
-- `early_weston.service` starts at `sysinit.target` with `DefaultDependencies=no` and `Wants=dev-dri-card0.device`.
-- A minimal `weston.ini` is generated at runtime (`/run/early-weston/weston.ini`) with `drm-device=card0`, `require-input=false`, and `xwayland=false` to bypass slow udev seat enumeration.
-- A pre-start loop polls `udevadm info` for `ID_SEAT=` to ensure libseat can open the device before Weston starts.
-- Weston runs with `--backend=drm-backend.so --shell=kiosk-shell.so --idle-time=0`.
-- On failure, it retries every 100ms (`RestartSec=0.1`) to handle driver probe races.
+- A udev rule fires 'weston.service' whenever DRM is ready ( dev-dri-card0.device )
+- 'weston.service runs with  `DefaultDependencies=no`, bypassing sysinit.target ordering.
+- 'weston.service runs with --backend=drm-backend.so --shell=kiosk-shell.so --idle-time=0 
 
 ---
 
@@ -89,24 +86,35 @@ The installer automatically:
 7. Auto-discovers and enables all `early_*.service` units
 8. Runs `udevadm control --reload-rules && udevadm trigger`
 
-### Reboot
+#### Reboot
 ```bash
 sudo reboot
 ```
 
 After reboot, the early boot services will activate automatically as their respective hardware devices are enumerated.
 
+### Deploy to Source code and enable the Quickboot module at compile time
 
-## Getting in Contact
+#### Fetch quickboot recipes 
+```bash
+cd qcom-meta
+git clone https://github.com/ctheegal/quickboot
+```bash
 
-How to contact maintainers. E.g. GitHub Issues, GitHub Discussions could be indicated for many cases. However a mail list or list of Maintainer e-mails could be shared for other types of discussions. E.g.
+#### Add the recipe to `qcom-multimedia-image` (or any image) so it's baked in from first boot
+```bash
+meta-qcom-distro/recipes-products/images/qcom-multimedia-image.bb
+IMAGE_INSTALL:append = " quickboot_audio quickboot_camera quickboot_display"
+```bash
 
-* [Report an Issue on GitHub](../../issues)
-* [Open a Discussion on GitHub](../../discussions)
-* [E-mail us](mailto:REPLACE-ME@qti.qualcomm.com) for general questions
+
+## Author
+
+* __Chitti Babu Theegala__ — `ctheegal@qti.qualcomm.com`\
+* __Vaibhav Jindal__ — `vaibjind@qti.qualcomm.com`\
+* __Tarun Balaji Nidiganti__ — `tnidiganti@qti.qualcomm.com`\
+Qualcomm Technologies, Inc.
 
 ## License
 
-*\<update with your project name and license\>*
-
-*\<REPLACE-ME\>* is licensed under the [BSD-3-clause License](https://spdx.org/licenses/BSD-3-Clause.html). See [LICENSE.txt](LICENSE.txt) for the full license text.
+*Quickboot* is licensed under the [BSD-3-clause License](https://spdx.org/licenses/BSD-3-Clause.html). See [LICENSE.txt](LICENSE.txt) for the full license text.
