@@ -22,7 +22,7 @@ echo ""
 
 # Ensure target directories exist
 mkdir -p /etc/udev/rules.d/
-mkdir -p /etc/modules.d/
+mkdir -p /etc/modules-load.d/
 mkdir -p /etc/modprobe.d/
 mkdir -p /etc/systemd/system/
 mkdir -p /usr/bin/
@@ -49,7 +49,7 @@ for COMPONENT_DIR in "$SCRIPT_DIR"/quickboot-*/files; do
         if ls "$COMPONENT_DIR"/*.conf 1> /dev/null 2>&1; then
             for conf_file in "$COMPONENT_DIR"/*.conf; do
                 if [[ $(basename "$conf_file") == *"-modules.conf" ]]; then
-                    cp -v "$conf_file" /etc/modules.d/
+                    cp -v "$conf_file" /etc/modules-load.d/
                 else
                     cp -v "$conf_file" /etc/modprobe.d/
                 fi
