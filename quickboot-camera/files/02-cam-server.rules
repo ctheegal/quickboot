@@ -1,3 +1,0 @@
-# Trigger cam-server.service automatically as soon as the main video device (video0) is enumerated by the kernel.
-
-SUBSYSTEM=="video4linux", KERNEL=="video0", ACTION=="add", TAG+="systemd", ENV{SYSTEMD_WANTS}="cam-server.service"
