@@ -86,7 +86,23 @@ for COMPONENT_DIR in "$SCRIPT_DIR"/quickboot-*/files; do
         if ls "$COMPONENT_DIR"/*.wav 1> /dev/null 2>&1; then
             cp -v "$COMPONENT_DIR"/*.wav /usr/share/sounds/
         fi
-        
+		
+		# 7. Process Subdirectories (run scripts inside folders)
+		for SUB_DIR in "$COMPONENT_DIR"/*/; do
+			if [ -d "$SUB_DIR" ]; then
+				echo "=> Processing subdirectory: $(basename "$SUB_DIR")"
+
+				# Check if it has any .sh scripts
+				if ls "$SUB_DIR"/*.sh 1> /dev/null 2>&1; then
+					for script in "$SUB_DIR"/*.sh; do
+						echo "   Running script: $script"
+						chmod +x "$script"
+						"$script"
+					done
+				fi
+			fi
+		done
+		
         echo ""
     fi
 done

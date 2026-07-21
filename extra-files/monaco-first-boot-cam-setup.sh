@@ -25,9 +25,6 @@ efivar -n 882f8c2b-9646-435f-8de5-f208ff80c1bd-VendorDtbOverlays -p
 
 mkdir /data/sensors-to-remove
 cd /usr/lib/camx/lemans/camera/
-mv com.qti.sensormodule.cmk_imx577_rb4_csi0.bin /data/sensors-to-remove
-mv com.qti.sensormodule.cmk_imx577_rb4_csi1.bin /data/sensors-to-remove
-mv com.qti.sensormodule.cmk_imx577_rb4_csi2.bin /data/sensors-to-remove
 mv com.qti.sensormodule.cmk_imx577_rb8_csi0.bin /data/sensors-to-remove
 mv com.qti.sensormodule.cmk_imx577_rb8_csi2.bin /data/sensors-to-remove
 mv com.qti.sensormodule.cmk_imx577_rb8_csi3.bin /data/sensors-to-remove
